@@ -1,0 +1,9 @@
+.idea
+.objs/
+.deps/
+*.o
+*.d
+ircserv
+ircbot
+irclib.a
+.vscode
