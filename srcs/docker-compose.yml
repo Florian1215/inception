@@ -1,5 +1,3 @@
-version: ‘3’
-
 services:
 
   nginx:
@@ -7,7 +5,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      -inception
+      - inception
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
@@ -60,10 +58,21 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/'
+      device: '/Users/florianguiramand/data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/florianguiramand/data/mysql'
 
 secrets:
   ssl_key:
     file: ../.SECRET/inception.key
   ssl_crt:
     file: ../.SECRET/inception.crt
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
