@@ -1,26 +1,19 @@
 #!/bin/bash
 
-sleep 10
+sleep 3
 
-if [ ! -f wp-config.php ]; then
-    wp config create	--allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=mariadb:3306 --path='/var/www/wordpress'
-
-    sleep 2
-    wp core download --allow-root
-    head -n -1 /var/www/wordpress/wp-config.php > tmp.txt; mv tmp.txt /var/www/wordpress/wp-config.php
-    cat /custom/conf.php >> /var/www/wordpress/wp-config.php
-
-
-    wp core install --url=$DOMAIN --title=inception --admin_user=$WORDPRESS_ADMIN --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL --allow-root --path='/var/www/wordpress'
-    wp user create --allow-root --role=author $WORDPRESS_USER $WORDPRESS_USER_EMAIL --user_pass=$WORDPRESS_USER_PASSWORD --path='/var/www/wordpress' >> /log.txt
-    wp theme install bizboost --activate --allow-root --path='/var/www/wordpress'
-    wp plugin install redis-cache --activate --allow-root --path='/var/www/wordpress'
-    wp plugin update --all --allow-root --path='/var/www/wordpress'
+if [ ! -f wp-config.php ];
+then
+  cd $VOLUME_WP
+  /wp-cli.phar core download --allow-root
+  /wp-cli.phar config create --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=mariadb
+  /wp-cli.phar core install --allow-root --url="https://fguirama.42.fr" --title=$COMPOSE_PROJECT_NAME --admin_user=$WORDPRESS_ADMIN --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL
+  /wp-cli.phar --allow-root option update siteurl "https://fguirama.42.fr"
+  /wp-cli.phar --allow-root option update home "https://fguirama.42.fr"
 fi
 
 if [ ! -d /run/php ]; then
 	mkdir /run/php
 fi
-wp redis enable --allow-root  --path='/var/www/wordpress'
 
-/usr/sbin/php-fpm7.4 -F
+exec $@
