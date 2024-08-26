@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#todo test if already exist
+
+chgrp -R mysql /var/lib/mysql
+chmod -R g+rwx /var/lib/mysql
+
 service mariadb start
 
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
@@ -10,4 +15,4 @@ FLUSH PRIVILEGES;"
 
 mysqladmin -u root -p${DB_ROOT_PASSWORD} shutdown
 
-exec mysqld_safe -u ${DB_USER}
+exec "$@"
