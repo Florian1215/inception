@@ -12,9 +12,9 @@ services:
     env_file:
       - .env
     volumes:
-      - mariadb:/var/lib/mysql
+      - "wordpress:$VOLUME_WP"
     ports:
-      - "4443:443"
+      - "443:443"
     restart: on-failure
     secrets:
       - ssl_key
@@ -30,7 +30,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress:/var/www/wordpress
+      - "mariadb:$VOLUME_DB"
     restart: unless-stopped
     expose:
       - "3306"
@@ -47,7 +47,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress:/var/www/wordpress
+      - "wordpress:$VOLUME_WP"
     ports:
       - "9000"
     restart: on-failure
