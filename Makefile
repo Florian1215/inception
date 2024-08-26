@@ -1,16 +1,16 @@
 
 # ---------- VARIABLES ----------------------------------------------------------------------------------------------- #
+NAME				=	inception
 LOGIN				=	fguirama
 DOMAIN				=	$(LOGIN).42.fr
-
 SECRET				=	./.SECRET
 SECRET_KEY			=	$(SECRET)/ssl_key
 SECRET_CRT			=	$(SECRET)/ssl_crt
 
-#DATA_DIR		=	/home/$(LOGIN)/data
-DATA_DIR		=	/Users/florianguiramand/data
-DATA_WP_DIR	=	$(DATA_DIR)/wordpress
-DATA_DB_DIR	=	$(DATA_DIR)/mariadb
+#DATA_DIR			=	/home/$(LOGIN)/data
+DATA_DIR			=	/Users/florianguiramand/data
+DATA_WP_DIR			=	$(DATA_DIR)/wordpress
+DATA_DB_DIR			=	$(DATA_DIR)/mariadb
 
 ENV					=	DOMAIN=${DOMAIN} DATA_WP_DIR=$(DATA_WP_DIR) DATA_DB_DIR=$(DATA_DB_DIR) SECRET_KEY=$(SECRET_KEY) SECRET_CRT=$(SECRET_CRT)
 
@@ -19,22 +19,27 @@ COMPOSE_FLAGS		=	$(ENV) $(COMPOSE) --project-directory ./srcs
 
 
 # ---------- RULES --------------------------------------------------------------------------------------------------- #
-all:				$(SECRET) $(DATA_DIR) up
+all:				$(NAME)
 
-up:
+$(NAME):			$(SECRET) $(DATA_DIR)
 					$(COMPOSE_FLAGS) up --build
+
+up:					$(SECRET) $(DATA_DIR)
+					$(COMPOSE_FLAGS) up
 
 clean:
 					$(COMPOSE_FLAGS) down
 
 fclean:
-					#docker run --rm -v /home/fguirama/data:data sh -c "rm -rf $(DATA_DIR)"
+					docker run --rm -v $(DATA_DIR):/data busybox sh -c "rm -rf $(DATA_DIR)"
 					$(COMPOSE_FLAGS) down -v --rmi all
 					rm -rf $(SECRET)
 					rm -rf $(DATA_DIR)
 
 prune:
 					docker system prune -af
+
+re:					fclean all
 
 $(SECRET):
 					mkdir -p $@
