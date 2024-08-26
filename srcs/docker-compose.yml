@@ -58,13 +58,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '$DATA_WP_DIRECTORY'
+      device: '$DATA_WP_DIR'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '$DATA_DB_DIRECTORY'
+      device: '$DATA_DB_DIR'
 
 secrets:
   ssl_key:
