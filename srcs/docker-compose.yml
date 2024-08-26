@@ -58,19 +58,19 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/florianguiramand/data/wordpress'
+      device: '$DATA_WP_DIRECTORY'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/florianguiramand/data/mysql'
+      device: '$DATA_DB_DIRECTORY'
 
 secrets:
   ssl_key:
-    file: ../.SECRET/inception.key
+    file: "../$SECRET_KEY"
   ssl_crt:
-    file: ../.SECRET/inception.crt
+    file: "../$SECRET_CRT"
 
 networks:
   inception:
