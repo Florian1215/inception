@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f /var/lib/mysql ]
+if [ -d /var/lib/mysql ]
 then
 	echo "Mariadb already downloaded"
 else
