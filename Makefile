@@ -7,8 +7,7 @@ SECRET				=	./.SECRET
 SECRET_KEY			=	$(SECRET)/ssl_key
 SECRET_CRT			=	$(SECRET)/ssl_crt
 
-#DATA_DIR			=	/home/$(LOGIN)/data
-DATA_DIR			=	/Users/florianguiramand/data
+DATA_DIR			=	/home/$(LOGIN)/data
 DATA_WP_DIR			=	$(DATA_DIR)/wordpress
 DATA_DB_DIR			=	$(DATA_DIR)/mariadb
 
@@ -27,6 +26,9 @@ $(NAME):			$(SECRET) $(DATA_DIR)
 up:					$(SECRET) $(DATA_DIR)
 					$(COMPOSE_FLAGS) up
 
+build:				$(SECRET) $(DATA_DIR)
+					$(COMPOSE_FLAGS) build
+
 clean:
 					$(COMPOSE_FLAGS) down
 
@@ -44,9 +46,10 @@ re:					fclean all
 $(SECRET):
 					mkdir -p $@
 					openssl req -x509 -newkey rsa:2048 -nodes -days 365 -out $(SECRET_CRT) -keyout $(SECRET_KEY) -subj "/C=FR/ST=ARA/L=Lyon/O=42/OU=42/CN=$(DOMAIN)/UID=$(LOGIN)"
-					#openssl rand -hex -out ${SECRET}password
 
 $(DATA_DIR):
 					mkdir -p $@
 					mkdir -p $(DATA_WP_DIR)
 					mkdir -p $(DATA_DB_DIR)
+
+.PHONY:				all up build clean fclean prune re
