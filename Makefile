@@ -36,7 +36,6 @@ fclean:
 					docker run --rm -v $(DATA_DIR):/data busybox sh -c "rm -rf $(DATA_DIR)"
 					$(COMPOSE_FLAGS) down -v --rmi all
 					rm -rf $(SECRET)
-					rm -rf $(DATA_DIR)
 
 prune:
 					docker system prune -af
