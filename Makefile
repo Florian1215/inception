@@ -1,20 +1,20 @@
 
 # ---------- VARIABLES ----------------------------------------------------------------------------------------------- #
-NAME				=	inception
-LOGIN				=	fguirama
-DOMAIN				=	$(LOGIN).42.fr
-SECRET				=	./.SECRET
-SECRET_KEY			=	$(SECRET)/ssl_key
-SECRET_CRT			=	$(SECRET)/ssl_crt
+NAME			=	inception
+LOGIN			=	fguirama
+DOMAIN			=	$(LOGIN).42.fr
+SECRET			=	./.SECRET
+SECRET_KEY		=	$(SECRET)/ssl_key
+SECRET_CRT		=	$(SECRET)/ssl_crt
 
-DATA_DIR			=	/home/$(LOGIN)/data
-DATA_WP_DIR			=	$(DATA_DIR)/wordpress
-DATA_DB_DIR			=	$(DATA_DIR)/mariadb
+DATA_DIR		=	/home/$(LOGIN)/data
+DATA_WP_DIR		=	$(DATA_DIR)/wordpress
+DATA_DB_DIR		=	$(DATA_DIR)/mariadb
 
-ENV					=	DOMAIN=${DOMAIN} DATA_WP_DIR=$(DATA_WP_DIR) DATA_DB_DIR=$(DATA_DB_DIR) SECRET_KEY=$(SECRET_KEY) SECRET_CRT=$(SECRET_CRT)
+ENV				=	DOMAIN=${DOMAIN} DATA_WP_DIR=$(DATA_WP_DIR) DATA_DB_DIR=$(DATA_DB_DIR) SECRET_KEY=$(SECRET_KEY) SECRET_CRT=$(SECRET_CRT)
 
-COMPOSE				=	docker compose
-COMPOSE_FLAGS		=	$(ENV) $(COMPOSE) --project-directory ./srcs
+COMPOSE			=	docker compose
+COMPOSE_FLAGS	=	$(ENV) $(COMPOSE) --project-directory ./srcs
 
 
 # ---------- RULES --------------------------------------------------------------------------------------------------- #
@@ -33,9 +33,10 @@ clean:
 					$(COMPOSE_FLAGS) down
 
 fclean:
-					docker run --rm -v $(DATA_DIR):/data busybox sh -c "rm -rf $(DATA_DIR)"
+					docker run --rm -v $(DATA_DIR):/data busybox sh -c "rm -rf /data/wordpress /data/mariadb"
 					$(COMPOSE_FLAGS) down -v --rmi all
 					rm -rf $(SECRET)
+					rm -rf $(DATA_DIR)
 
 prune:
 					docker system prune -af

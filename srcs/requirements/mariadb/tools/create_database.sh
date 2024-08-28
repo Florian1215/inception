@@ -1,7 +1,6 @@
 #!/bin/bash
 
-if [ -d /var/lib/mysql ]
-then
+if [ -d "/var/lib/mysql/${DB_NAME}" ]; then
 	echo "Mariadb already downloaded"
 else
   chgrp -R mysql /var/lib/mysql
