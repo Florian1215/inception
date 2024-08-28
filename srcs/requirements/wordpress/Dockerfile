@@ -13,9 +13,9 @@ RUN         chmod u+x /wp-cli.phar
 RUN         mkdir /run/php
 RUN         chown -R www-data:www-data /run/php
 
-COPY        ./conf/www.conf             /etc/php/7.4/fpm/pool.d/
-COPY        ./tools/config_wordpress.sh /var/run/install_wordpress.sh
-RUN         chmod u+x                   /var/run/install_wordpress.sh
+COPY        ./conf/www.conf                 /etc/php/7.4/fpm/pool.d/
+COPY        ./tools/install_wordpress.sh    /var/run/install_wordpress.sh
+RUN         chmod u+x                       /var/run/install_wordpress.sh
 
-ENTRYPOINT  ["tmp/config_wordpress.sh"]
+ENTRYPOINT  ["/var/run/install_wordpress.sh"]
 CMD         ["php-fpm7.4", "-F"]
