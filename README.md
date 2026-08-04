@@ -87,20 +87,20 @@ The project uses environment variables stored in `srcs/.env`. Create or update t
 
 ```bash
 # Domain configuration
-DOMAIN=yourusername.42.fr
+DOMAIN=login.42.fr
 
 # WordPress volume mount path
-VOLUME_WP=/home/yourusername/data/wordpress
+VOLUME_WP=/home/login/data/wordpress
 
 # Database volume mount path
-VOLUME_DB=/home/yourusername/data/mariadb
+VOLUME_DB=/home/login/data/mariadb
 
 # WordPress configuration
 WP_TITLE=My WordPress Site
 WP_ADMIN_USER=admin
 WP_ADMIN_PASSWORD=secure_password_123
 WP_ADMIN_EMAIL=admin@example.com
-WP_URL=https://yourusername.42.fr
+WP_URL=https://login.42.fr
 
 # Database configuration
 DB_NAME=wordpress
@@ -132,8 +132,8 @@ The project will:
 
 ### Accessing the Services
 
-- **WordPress**: https://yourusername.42.fr
-- **WordPress Admin Panel**: https://yourusername.42.fr/wp-admin
+- **WordPress**: https://login.42.fr
+- **WordPress Admin Panel**: https://login.42.fr/wp-admin
 - **Nginx**: Proxy server (port 443)
 - **MariaDB**: Database server (exposed internally, port 3306)
 
